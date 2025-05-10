@@ -1,0 +1,9 @@
+package pb:rules@0.1.0;
+
+world target-resolver {
+    import logging;
+
+    export resolver;
+    export types;
+}
+
