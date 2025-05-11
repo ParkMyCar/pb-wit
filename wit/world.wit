@@ -4,3 +4,8 @@ world target-resolver {
     import logging;
     export resolver;
 }
+
+world rule-provider {
+    import logging;
+    export rules;
+}

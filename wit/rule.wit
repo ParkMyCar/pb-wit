@@ -1,0 +1,42 @@
+interface rules {
+    use types.{attribute, provider};
+
+    rule-set: func() -> list<tuple<string, rule>>;
+
+    /// An individual rule that can be run.
+    resource rule {
+        /// Name of this rule.
+        name: static func() -> string;
+        /// Run a rule.
+        /// 
+        /// This method returns a `rule-future` which is an asynchronous value and it must be polled
+        /// to determine the result of running the rule.
+        run: func(attrs: list<tuple<string, attribute>>, context: ctx) -> rule-future;
+    }
+
+    /// An asynchronous result for the execution of a `rule`.
+    /// 
+    /// Canonically this type would be known as a `Future` or `Promise` in many languages.
+    /// 
+    /// Note: WIT does not support generic user defined types, so we need to create a specific
+    /// `rule-future` and `rule-poll` type as opposed to some `future<list<provider>>`. WASI 
+    /// Preview 3 (aka WASIp3) is supposed to introduce the `async` keyword which should prevent
+    /// this need for "hand written" futures.
+    resource rule-future {
+        poll: func(waker: borrow<waker>) -> rule-poll;
+    }
+
+    /// The result of "polling" a `rule-future`.
+    variant rule-poll {
+        pending,
+        ready(list<provider>),
+    }
+
+    resource ctx {
+        actions: func() -> borrow<actions>;
+    }
+
+    resource actions {
+        run-wasm: func(name: string);
+    }
+}
