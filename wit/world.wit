@@ -1,11 +1,8 @@
 package pb:rules@0.1.0;
 
-world target-resolver {
+world rule-set {
     import logging;
-    export resolver;
-}
 
-world rule-provider {
-    import logging;
+    export resolver;
     export rules;
 }
