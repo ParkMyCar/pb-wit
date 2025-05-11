@@ -33,7 +33,7 @@ interface rules {
     }
 
     resource ctx {
-        actions: func() -> borrow<actions>;
+        actions: func() -> actions;
     }
 
     resource actions {
