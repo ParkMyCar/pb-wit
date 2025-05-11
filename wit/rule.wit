@@ -1,5 +1,5 @@
 interface rules {
-    use types.{attribute, provider};
+    use types.{attribute, provider, waker};
 
     rule-set: func() -> list<tuple<string, rule>>;
 
