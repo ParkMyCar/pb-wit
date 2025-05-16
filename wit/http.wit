@@ -3,11 +3,13 @@ interface http {
     /// Make an HTTP `GET` request.
     get: func(url: request) -> response;
 
+    /// An HTTP request.
     record request {
         url: string,
         headers: list<tuple<string, string>>,
     }
 
+    /// An HTTP response.
     resource response {
         headers: func() -> list<tuple<string, string>>,
         body: func() -> body-stream;
