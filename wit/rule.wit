@@ -1,6 +1,5 @@
 interface rules {
     use types.{attribute, provider, waker};
-    use http.{client};
 
     rule-set: func() -> list<tuple<string, rule>>;
 
@@ -32,6 +31,11 @@ interface rules {
         pending,
         ready(list<provider>),
     }
+}
+
+/// Context or state that is provided to a rule implementation.
+interface context {
+    use http.{client};
 
     resource ctx {
         actions: func() -> actions;

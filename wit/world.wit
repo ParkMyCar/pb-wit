@@ -2,6 +2,7 @@ package pb:rules@0.1.0;
 
 world rule-set {
     import logging;
+    import context;
 
     export resolver;
     export rules;
