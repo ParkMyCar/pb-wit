@@ -37,11 +37,9 @@ interface rules {
 /// Context or state that is provided to a rule implementation.
 interface context {
     use http.{client};
-    use types.{waker};
 
     resource ctx {
         actions: func() -> actions;
-        waker: func() -> waker;
     }
 
     resource actions {
