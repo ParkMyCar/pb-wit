@@ -20,7 +20,7 @@ interface http {
     }
 
     resource body-stream {
-        poll-next: func(waker: borrow<waker>) -> option<body-poll>;
+        poll-next: func(waker: waker) -> option<body-poll>;
     }
 
     variant body-poll {

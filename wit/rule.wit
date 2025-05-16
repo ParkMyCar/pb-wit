@@ -24,7 +24,7 @@ interface rules {
     /// Preview 3 (aka WASIp3) is supposed to introduce the `async` keyword which should prevent
     /// this need for "hand written" futures.
     resource rule-future {
-        poll: func(waker: borrow<waker>) -> rule-poll;
+        poll: func(waker: waker) -> rule-poll;
     }
 
     /// The result of "polling" a `rule-future`.

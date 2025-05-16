@@ -63,5 +63,6 @@ interface types {
     /// be run.
     resource waker {
         wake: func();
+        clone: func() -> waker;
     }
 }
