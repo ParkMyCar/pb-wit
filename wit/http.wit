@@ -20,11 +20,11 @@ interface http {
     }
 
     resource body-stream {
-        poll-next: func(waker: waker) -> option<body-poll>;
+        poll-next: func(waker: waker) -> body-poll;
     }
 
     variant body-poll {
         pending,
-        ready(list<u8>),
+        ready(option<list<u8>>),
     }
 }
