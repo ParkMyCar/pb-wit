@@ -1,7 +1,5 @@
 /// Types related to target resolution.
 interface types {
-    use host-futures.{host-waker};
-
     /// An individual build target.
     record target {
         /// Name of the build target.
@@ -64,7 +62,6 @@ interface types {
     /// A `waker` is a handle for notifying some executing runtime that the current task is ready to
     /// be run.
     resource waker {
-        constructor(init: host-waker);
         wake: func();
         clone: func() -> waker;
     }
