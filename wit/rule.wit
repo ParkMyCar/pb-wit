@@ -1,5 +1,6 @@
 interface rules {
     use types.{attribute, provider, waker};
+    use context.{ctx};
 
     rule-set: func() -> list<tuple<string, rule>>;
 
