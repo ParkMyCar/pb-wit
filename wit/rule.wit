@@ -37,6 +37,7 @@ interface rules {
     }
 
     resource actions {
-        run-wasm: func(name: string);
+        /// Make an HTTP `GET` request.
+        http-get: func(request: http.request) -> http.response;
     }
 }

@@ -1,8 +1,7 @@
 /// An interface for making HTTP requests.
 interface http {
-    /// Make an HTTP `GET` request.
-    get: func(url: request) -> response;
-
+    use types.{waker};
+    
     /// An HTTP request.
     record request {
         url: string,
