@@ -1,0 +1,24 @@
+/// An interface for making HTTP requests.
+interface http {
+    /// Make an HTTP `GET` request.
+    get: func(url: request) -> response;
+
+    record request {
+        url: string,
+        headers: list<tuple<string, string>>,
+    }
+
+    resource response {
+        headers: func() -> list<tuple<string, string>>,
+        body: func() -> body-stream;
+    }
+
+    resource body-stream {
+        poll-next: func(waker: borrow<waker>) -> option<body-poll>,
+    }
+
+    variant body-poll {
+        pending,
+        ready(list<u8>),
+    }
+}
