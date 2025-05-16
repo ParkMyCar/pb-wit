@@ -3,7 +3,6 @@ package pb:rules@0.1.0;
 world rule-set {
     import logging;
     import context;
-    import host-futures;
 
     export resolver;
     export rules;

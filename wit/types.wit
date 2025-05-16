@@ -69,10 +69,3 @@ interface types {
         clone: func() -> waker;
     }
 }
-
-interface host-futures {
-    resource host-waker {
-        wake: func();
-        clone: func() -> host-waker;
-    }
-}
