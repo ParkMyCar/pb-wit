@@ -1,5 +1,6 @@
 interface rules {
     use types.{attribute, provider, waker};
+    use http.{client};
 
     rule-set: func() -> list<tuple<string, rule>>;
 
@@ -37,7 +38,7 @@ interface rules {
     }
 
     resource actions {
-        /// Make an HTTP `GET` request.
-        http-get: func(request: http.request) -> http.response;
+        /// Get an HTTP client that can make requests.
+        http: func() -> client;
     }
 }

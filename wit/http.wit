@@ -2,6 +2,11 @@
 interface http {
     use types.{waker};
     
+    resource client {
+        /// Make an HTTP `GET` request.
+        get: func(request: request) -> response;
+    }
+
     /// An HTTP request.
     record request {
         url: string,
@@ -10,12 +15,12 @@ interface http {
 
     /// An HTTP response.
     resource response {
-        headers: func() -> list<tuple<string, string>>,
+        headers: func() -> list<tuple<string, string>>;
         body: func() -> body-stream;
     }
 
     resource body-stream {
-        poll-next: func(waker: borrow<waker>) -> option<body-poll>,
+        poll-next: func(waker: borrow<waker>) -> option<body-poll>;
     }
 
     variant body-poll {
