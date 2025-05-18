@@ -1,10 +1,10 @@
 /// An interface for making HTTP requests.
 interface http {
-    use types.{waker};
+    use types.{bytes-stream, waker};
     
     resource client {
         /// Make an HTTP `GET` request.
-        get: func(request: request) -> response;
+        get: func(request: request) -> response-poll;
     }
 
     /// An HTTP request.
@@ -15,16 +15,14 @@ interface http {
 
     /// An HTTP response.
     resource response {
+        status: func() -> u16;
         headers: func() -> list<tuple<string, string>>;
-        body: func() -> body-stream;
+        body: func() -> bytes-stream;
     }
 
-    resource body-stream {
-        poll-next: func(waker: waker) -> body-poll;
-    }
-
-    variant body-poll {
+    /// Polling status states for a `response`.
+    variant response-poll {
         pending,
-        ready(option<list<u8>>),
+        ready(response),
     }
 }

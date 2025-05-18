@@ -59,6 +59,39 @@ interface types {
         nested(provider-dict),
     }
 
+    /// An asynchronous iterator of bytes.
+    resource bytes-stream {
+        /// Poll the stream, returning bytes if they are available or None if
+        /// the stream has ended.
+        poll-next: func(waker: waker) -> bytes-poll;
+    }
+
+    /// Polling status states for a `bytes-stream`.
+    variant bytes-poll {
+        pending,
+        ready(option<list<u8>>),
+    }
+
+    /// Asynchronously sink bytes into some resource.
+    resource bytes-sink {
+        /// Start sending bytes into this sink.
+        /// 
+        /// As the name suggests, a call to this function only starts the
+        /// process of sinking bytes. Each call of this function must by
+        /// followed by a call to `poll_flush` to ensure the provided bytes are
+        /// flushed to the underlying resource..
+        start-send: func(bytes: list<u8>);
+
+        /// Flush any staged bytes to the underlying resource.
+        poll-flush: func(waker: waker) -> flush-poll;
+    }
+
+    /// Polling status states for a flushing a `bytes-sink`.
+    variant flush-poll {
+        pending,
+        ready,
+    }
+
     /// A `waker` is a handle for notifying some executing runtime that the current task is ready to
     /// be run.
     resource waker {
