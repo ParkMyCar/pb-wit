@@ -4,7 +4,12 @@ interface http {
     
     resource client {
         /// Make an HTTP `GET` request.
-        get: func(request: request) -> response-poll;
+        get: func(request: request) -> response-future;
+    }
+
+    /// An asynchronous result for an HTTP request.
+    resource response-future {
+        poll: func(waker: waker) -> response-poll;
     }
 
     /// An HTTP request.
