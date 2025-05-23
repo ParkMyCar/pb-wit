@@ -7,8 +7,13 @@ interface read-filesystem {
         /// Name of the file, including extension.
         name: func() -> string;
 
+        /// Read the entire contents of the file.
+        /// 
+        /// If the file is larger than what can fit in memory see `read-stream`.
+        read: func() -> list<u8>;
+
         /// Return a resource that asynchronously reads bytes from this file.
-        read: func() -> bytes-stream;
+        read-stream: func() -> bytes-stream;
     }
 }
 
@@ -21,6 +26,6 @@ interface write-filesystem {
         create: func(name: string) -> write-file;
 
         /// Return a resource that asynchronously writes bytes to this file.
-        write: func() -> bytes-sink;
+        write-sink: func() -> bytes-sink;
     }
 }
