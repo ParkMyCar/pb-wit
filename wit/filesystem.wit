@@ -21,8 +21,10 @@ interface read-filesystem {
 interface write-filesystem {
     use types.{bytes-sink};
 
-    /// Create a new file with the specified name.
-    create-file: func(name: string) -> write-file;
+    resource write-client {
+        /// Create a new file with the specified name.
+        create-file: func(name: string) -> write-file;
+    }
 
     resource write-file {
         /// Asynchronously writes bytes to this file.

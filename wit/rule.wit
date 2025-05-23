@@ -36,8 +36,8 @@ interface rules {
 
 /// Context or state that is provided to a rule implementation.
 interface context {
-    use filesystem.{write-filesystem};
     use http.{client};
+    use write-filesystem.{write-client};
 
     resource ctx {
         actions: func() -> actions;
@@ -48,6 +48,6 @@ interface context {
         http: func() -> client;
 
         /// Get a client to write files.
-        write-filesystem: func() -> write-filesystem;
+        write-filesystem: func() -> write-client;
     }
 }
