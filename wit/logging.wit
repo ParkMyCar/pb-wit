@@ -15,9 +15,13 @@ interface logging {
         value: string,
     }
 
-    /// Line or location in source code where an event was emitted.
+    /// Location in source code where an event was emitted.
     record location {
+        /// Path of the source file.
         file-path: option<string>,
+        /// Function or module.
+        target: option<string>,
+        /// Line number in source code.
         line: option<u32>,
     }
 
