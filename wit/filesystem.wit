@@ -21,11 +21,17 @@ interface read-filesystem {
 interface write-filesystem {
     use types.{bytes-sink};
 
-    resource write-file {
-        /// Create a new file with the specified name.
-        create: func(name: string) -> write-file;
+    /// Create a new file with the specified name.
+    create-file: func(name: string) -> write-file;
 
-        /// Return a resource that asynchronously writes bytes to this file.
+    resource write-file {
+        /// Asynchronously writes bytes to this file.
         write-sink: func() -> bytes-sink;
+
+        /// Asynchronously write bytes to an extended attribute on this file.
+        write-xattr: func(name: string) -> bytes-sink;
+
+        /// Set the mtime of this file.
+        set-mtime: func(millis: u64)
     }
 }
