@@ -32,6 +32,6 @@ interface write-filesystem {
         write-xattr: func(name: string) -> bytes-sink;
 
         /// Set the mtime of this file.
-        set-mtime: func(millis: u64)
+        set-mtime: func(millis: u64);
     }
 }
