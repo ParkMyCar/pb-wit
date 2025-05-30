@@ -21,9 +21,12 @@ interface read-filesystem {
 interface write-filesystem {
     use types.{failable-future};
 
-    resource write-client {
+    resource write-directory {
         /// Create a new file with the specified name.
         create-file: func(name: string) -> write-file;
+
+        /// Create a new directory with the specified name.
+        create-directory: func(name: string) -> write-directory;
     }
 
     resource write-file {
@@ -34,6 +37,9 @@ interface write-filesystem {
         write-xattr: func(name: string, data: list<u8>) -> failable-future;
 
         /// Set the mtime of this file.
-        set-mtime: func(millis: u64);
+        set-mtime: func(millis: u64) -> failable-future;
+
+        /// Close this file, flushing content to disk.
+        close: func() -> failable-future;
     }
 }
