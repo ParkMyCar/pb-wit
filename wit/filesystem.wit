@@ -19,7 +19,7 @@ interface read-filesystem {
 
 /// A writeable filesystem interface.
 interface write-filesystem {
-    use types.{failable-future};
+    use types.{failable-future, waker};
 
     resource write-client {
         /// Create a new file with the specified name.
