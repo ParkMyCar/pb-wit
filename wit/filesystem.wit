@@ -19,7 +19,7 @@ interface read-filesystem {
 
 /// A writeable filesystem interface.
 interface write-filesystem {
-    use types.{bytes-sink};
+    use types.{failable-future};
 
     resource write-client {
         /// Create a new file with the specified name.
@@ -28,10 +28,10 @@ interface write-filesystem {
 
     resource write-file {
         /// Asynchronously writes bytes to this file.
-        write-sink: func() -> bytes-sink;
+        append: func(data: list<u8>) -> failable-future;
 
         /// Asynchronously write bytes to an extended attribute on this file.
-        write-xattr: func(name: string) -> bytes-sink;
+        write-xattr: func(name: string, data: list<u8>) -> failable-future;
 
         /// Set the mtime of this file.
         set-mtime: func(millis: u64);
