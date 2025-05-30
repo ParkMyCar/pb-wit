@@ -23,18 +23,18 @@ interface write-filesystem {
 
     resource write-client {
         /// Create a new file with the specified name.
-        create-file: func(name: string) -> write-file;
+        create-file: func(name: string) -> create-file-future;
 
         /// Create a new directory with the specified name.
-        create-directory: func(name: string) -> write-directory;
+        create-directory: func(name: string) -> create-directory-future;
     }
 
     resource write-directory {
         /// Create a new file with the specified name.
-        create-file: func(name: string) -> write-file;
+        create-file: func(name: string) -> create-file-future;
 
         /// Create a new directory with the specified name.
-        create-directory: func(name: string) -> write-directory;
+        create-directory: func(name: string) -> create-directory-future;
 
         /// Asynchronously write bytes to an extended attribute on this directory.
         write-xattr: func(name: string, data: list<u8>) -> failable-future;
@@ -58,5 +58,23 @@ interface write-filesystem {
 
         /// Close this file, flushing content to disk.
         close: func() -> failable-future;
+    }
+
+    resource create-file-future {
+        poll: func(waker: waker) -> create-file-poll;
+    }
+
+    variant create-file-poll {
+        pending,
+        ready(result<write-file, string>),
+    }
+
+    resource create-directory-future {
+        poll: func(waker: waker) -> create-directory-poll;
+    }
+
+    variant create-directory-poll {
+        pending,
+        ready(result<write-directory, string>),
     }
 }
