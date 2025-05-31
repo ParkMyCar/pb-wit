@@ -4,7 +4,7 @@ interface types {
     record target {
         /// Name of the build target.
         name: string,
-        /// Location of this target (e.g. build file).
+        /// Location of this target.
         location: string,
         /// Attributes/configuration of this target.
         attributes: list<tuple<string, attribute>>,
@@ -21,6 +21,22 @@ interface types {
         target(string),
         /// List of Targets
         target-list(list<string>),
+    }
+
+    /// Specification for an `attribute`.
+    record attribute-spec {
+        name: string,
+        kind: attribute-kind,
+        required: bool,
+    }
+
+    /// Kind of an `attribute`.
+    variant attribute-kind {
+        boolean,
+        text,
+        text-list,
+        target,
+        target-list,
     }
 
     /// Returned from the execution of a `rule`.

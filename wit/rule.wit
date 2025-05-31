@@ -1,13 +1,25 @@
 interface rules {
-    use types.{attribute, provider, waker};
+    use types.{attribute, attribute-spec, provider, waker};
     use context.{ctx};
 
     rule-set: func() -> list<tuple<string, rule>>;
+
+    /// Specification for an individual rule.
+    record rule-spec {
+        /// Attributes accepted by this rule.
+        attributes: list<attribute-spec>,
+        /// The output of this rule is a base repository.
+        repository: bool,
+    }
 
     /// An individual rule that can be run.
     resource rule {
         /// Name of this rule.
         name: static func() -> string;
+
+        /// Specifications for this rule.
+        spec: static func() -> rule-spec;
+
         /// Run a rule.
         /// 
         /// This method returns a `rule-future` which is an asynchronous value and it must be polled

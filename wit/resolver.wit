@@ -1,14 +1,62 @@
 /// A that can resolve targets given some configuration file.
-interface resolver {
+interface target-resolver {
     use read-filesystem.{file};
     use types.{target};
 
-    /// Returns a glob pattern that expresses what additional files this
-    /// resolver is interested in.
+    /// Resource that incrementally resolves a class of targets for an entire workspace.
     /// 
-    /// By default every resolver is passed `pb.toml` files.
-    additional-interest-glob: func() -> option<string>;
+    /// When starting the build system a resolver will get passed all of the manifest files it
+    /// registers interest in via `resolver::process-updates`. Over time as manifests change
+    /// `process-updates` will continue to be called. After passing a batch of updates, the build
+    /// system will call `resolver::target-diffs` to determine how the targets managed by this
+    /// resolver have changed.
+    resource resolver {
+        /// Create an instance of the resolver.
+        constructor();
+
+        /// Returns a glob pattern that expresses what additional files this
+        /// resolver is interested in.
+        /// 
+        /// By default every resolver is passed `pb.toml` files.
+        additional-interest-glob: static func() -> option<string>;
+        
+        /// Process a change to a manfiest file.
+        process-update: func(update: manifest-update);
+
+        /// Returns an iterator of diffs for build targets this resolver is responsible for.
+        target-diffs: func() -> target-diff-iterator;
+    }
+
+    /// Iterator of changes to resolved targets.
+    resource target-diff-iterator {
+        next: func() -> option<resolved-target>;
+    }
+
+    /// Update for a package within the workspace.
+    record manifest-update {
+        /// Path within the workspace where this manifest is located.
+        location: string,
+        /// Content of the manifest.
+        /// 
+        /// `None` indicates the package has been deleted.
+        content: option<file>,
+    }
     
-    /// Returns all targets present defined in the provided file.
-    resolve-target: func(file: file) -> result<list<target>, string>;
+    /// Change to a target that was resolved from a manifest file.
+    record resolved-target {
+        /// Path to the manifest file that this target was resolved from.
+        manifest: option<string>,
+        /// Change to the build target.
+        target: target-update,
+    }
+
+    /// Update for a build target created by a resolver.
+    variant target-update {
+        /// Add a new target.
+        add(target),
+        /// Delete a previously existing target.
+        delete(target),
+        /// Update an existing target.
+        update(target),
+    }
 }

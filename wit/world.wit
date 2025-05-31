@@ -4,6 +4,6 @@ world rule-set {
     import logging;
     import context;
 
-    export resolver;
+    export target-resolver;
     export rules;
 }
