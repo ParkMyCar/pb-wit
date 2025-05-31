@@ -8,8 +8,6 @@ interface read-filesystem {
         name: func() -> string;
 
         /// Read at most length bytes starting from offset.
-        /// 
-        /// If the returned blob of bytes is less than length, you've reached the end of the file.
         read: func(length: u64, offset: u64) -> list<u8>;
 
         /// Return a resource that asynchronously reads bytes from this file.
