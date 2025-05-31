@@ -15,10 +15,16 @@ interface rules {
     /// An individual rule that can be run.
     resource rule {
         /// Name of this rule.
-        name: static func() -> string;
+        /// 
+        /// TODO: Ideally this would be a static function, but it makes the generated
+        /// Rust trait non-object safe.
+        name: func() -> string;
 
         /// Specifications for this rule.
-        spec: static func() -> rule-spec;
+        /// 
+        /// TODO: Ideally this would be a static function, but it makes the generated
+        /// Rust trait non-object safe.
+        spec: func() -> rule-spec;
 
         /// Run a rule.
         /// 
